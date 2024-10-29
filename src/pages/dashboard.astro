@@ -66,11 +66,13 @@
     <!-- Script de JavaScript para manejar el token y abrir el sidebar -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // Token handling
+        // Verificar si el usuario está autenticado (token presente)
         const token = localStorage.getItem("token");
         if (!token) {
+          // Redirigir al login si no hay token
           window.location.href = "/";
         } else {
+          // Mostrar el token (opcional, para debugging)
           document.getElementById("token-info").textContent =
             `Tu token es: ${token}`;
         }
