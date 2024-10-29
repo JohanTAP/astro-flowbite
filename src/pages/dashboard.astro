@@ -68,7 +68,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         // Verificar si el usuario está autenticado (token presente en cookies)
         const cookies = document.cookie.split("; ");
-        const tokenCookie = cookies.find((row) => row.startsWith("token="));
+        const tokenCookie = cookies.find(row => row.startsWith("token="));
 
         const dashboardContent = document.getElementById("dashboard-content");
 
@@ -76,16 +76,17 @@
           // Redirigir al login si no hay token
           window.location.href = "/";
         } else {
+          // Extraer el valor del token
+          const token = tokenCookie.split("=")[1];
+
           // Mostrar el contenido del dashboard solo si el token es válido
           dashboardContent.classList.remove("hidden");
-          document.getElementById("token-info").textContent =
-            "Bienvenido al Panel de Control.";
+          // Mostrar el token para propósitos de prueba
+          document.getElementById("token-info").textContent = `Tu token es: ${token}`;
         }
 
         // Manejo del drawer sidebar
-        const drawerToggleButton = document.getElementById(
-          "drawer-toggle-button"
-        );
+        const drawerToggleButton = document.getElementById("drawer-toggle-button");
         const drawerNavigation = document.getElementById("drawer-navigation");
 
         if (drawerToggleButton && drawerNavigation) {
