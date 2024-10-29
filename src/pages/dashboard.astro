@@ -56,7 +56,7 @@
     </aside>
 
     <!-- Contenido principal -->
-    <main class="p-4 md:ml-64 h-auto pt-20">
+    <main id="dashboard-content" class="hidden p-4 md:ml-64 h-auto pt-20">
       <div class="text-gray-900 dark:text-white mb-4">
         <h1 class="text-3xl font-bold">Bienvenido al Panel de Control</h1>
         <p id="token-info" class="text-sm mt-2">Cargando...</p>
@@ -66,15 +66,20 @@
     <!-- Script de JavaScript para manejar el token y abrir el sidebar -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // Verificar si el usuario está autenticado (token presente)
-        const token = localStorage.getItem("token");
-        if (!token) {
+        // Verificar si el usuario está autenticado (token presente en cookies)
+        const cookies = document.cookie.split("; ");
+        const tokenCookie = cookies.find((row) => row.startsWith("token="));
+
+        const dashboardContent = document.getElementById("dashboard-content");
+
+        if (!tokenCookie) {
           // Redirigir al login si no hay token
           window.location.href = "/";
         } else {
-          // Mostrar el token (opcional, para debugging)
+          // Mostrar el contenido del dashboard solo si el token es válido
+          dashboardContent.classList.remove("hidden");
           document.getElementById("token-info").textContent =
-            `Tu token es: ${token}`;
+            "Bienvenido al Panel de Control.";
         }
 
         // Manejo del drawer sidebar

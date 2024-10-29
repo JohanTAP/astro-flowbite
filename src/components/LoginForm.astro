@@ -99,9 +99,7 @@
           "floating_standard_password"
         ) as HTMLInputElement;
         const errorMessage = document.getElementById("error-message");
-        const loginButton = document.getElementById(
-          "login-button"
-        ) as HTMLButtonElement;
+        const loginButton = document.getElementById("login-button") as HTMLButtonElement;
 
         const username = usernameField.value;
         const password = passwordField.value;
@@ -121,7 +119,10 @@
 
           if (response.ok) {
             const data = await response.json();
-            localStorage.setItem("token", data.token);
+            // Almacenar el token en una cookie segura en lugar de localStorage
+            document.cookie = `token=${data.token}; path=/; max-age=3600; secure; samesite=strict`;
+
+            // Redirigir al dashboard
             window.location.href = "/dashboard";
           } else {
             errorMessage.classList.remove("hidden");
