@@ -89,122 +89,123 @@
                 class="block text-sm font-semibold text-gray-900 dark:text-white"
                 >Usuario</span
               >
-            <ul
-              class="py-1 text-gray-700 dark:text-gray-300"
-              aria-labelledby="dropdown"
-            >
-              <li>
-                <a
-                  id="logout-button"
-                  href="#"
-                  class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
-                  >Cerrar sesión</a
-                >
-              </li>
-            </ul>
+              <ul
+                class="py-1 text-gray-700 dark:text-gray-300"
+                aria-labelledby="dropdown"
+              >
+                <li>
+                  <a
+                    id="logout-button"
+                    href="#"
+                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
+                    >Cerrar sesión</a
+                  >
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </nav>
 
-    <!-- Sidebar de navegación -->
-    <aside
-      id="drawer-navigation"
-      class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-      tabindex="-1"
-      aria-labelledby="drawer-navigation-label"
-      aria-hidden="true"
-    >
-      <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
-        <h5
-          id="drawer-navigation-label"
-          class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
-        >
-          Navegación
-        </h5>
-        <ul class="space-y-2">
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+      <!-- Sidebar de navegación -->
+      <aside
+        id="drawer-navigation"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        tabindex="-1"
+        aria-labelledby="drawer-navigation-label"
+        aria-hidden="true"
+      >
+        <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+          <h5
+            id="drawer-navigation-label"
+            class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
+          >
+            Navegación
+          </h5>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="#"
+                class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                <path d="M10 20a10 10 0 100-20 10 10 0 000 20z"></path>
-              </svg>
-              <span class="ml-3">Dashboard</span>
-            </a>
-          </li>
-          <!-- Puedes añadir más elementos del sidebar aquí -->
-        </ul>
-      </div>
-    </aside>
+                <svg
+                  aria-hidden="true"
+                  class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M10 20a10 10 0 100-20 10 10 0 000 20z"></path>
+                </svg>
+                <span class="ml-3">Dashboard</span>
+              </a>
+            </li>
+            <!-- Puedes añadir más elementos del sidebar aquí -->
+          </ul>
+        </div>
+      </aside>
 
-    <!-- Contenido principal -->
-    <main id="dashboard-content" class="hidden p-4 md:ml-64 h-auto pt-20">
-      <div class="text-gray-900 dark:text-white mb-4">
-        <h1 class="text-3xl font-bold">Bienvenido al Panel de Control</h1>
-        <p id="token-info" class="text-sm mt-2">Cargando...</p>
-      </div>
-    </main>
+      <!-- Contenido principal -->
+      <main id="dashboard-content" class="hidden p-4 md:ml-64 h-auto pt-20">
+        <div class="text-gray-900 dark:text-white mb-4">
+          <h1 class="text-3xl font-bold">Bienvenido al Panel de Control</h1>
+          <p id="token-info" class="text-sm mt-2">Cargando...</p>
+        </div>
+      </main>
 
-    <!-- Script de JavaScript para manejar el token, abrir el sidebar y cerrar sesión -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Verificar si el usuario está autenticado (token presente en cookies)
-        const cookies = document.cookie.split("; ");
-        const tokenCookie = cookies.find((row) => row.startsWith("token="));
+      <!-- Script de JavaScript para manejar el token, abrir el sidebar y cerrar sesión -->
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          // Verificar si el usuario está autenticado (token presente en cookies)
+          const cookies = document.cookie.split("; ");
+          const tokenCookie = cookies.find((row) => row.startsWith("token="));
 
-        const dashboardContent = document.getElementById("dashboard-content");
+          const dashboardContent = document.getElementById("dashboard-content");
 
-        if (!tokenCookie) {
-          // Redirigir al login si no hay token
-          window.location.href = "/";
-        } else {
-          // Extraer el valor del token
-          const token = tokenCookie.split("=")[1];
-
-          // Mostrar el contenido del dashboard solo si el token es válido
-          dashboardContent.classList.remove("hidden");
-          // Mostrar el token para propósitos de prueba
-          document.getElementById("token-info").textContent =
-            `Tu token es: ${token}`;
-        }
-
-        // Manejo del drawer sidebar
-        const drawerToggleButton = document.getElementById(
-          "drawer-toggle-button"
-        );
-        const drawerNavigation = document.getElementById("drawer-navigation");
-
-        if (drawerToggleButton && drawerNavigation) {
-          drawerToggleButton.addEventListener("click", () => {
-            drawerNavigation.classList.toggle("-translate-x-full");
-          });
-        }
-
-        // Manejo del botón de cerrar sesión
-        const logoutButton = document.getElementById("logout-button");
-        if (logoutButton) {
-          logoutButton.addEventListener("click", () => {
-            // Borrar la cookie del token
-            document.cookie =
-              "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            // Redirigir al login
+          if (!tokenCookie) {
+            // Redirigir al login si no hay token
             window.location.href = "/";
-          });
-        }
-      });
-    </script>
+          } else {
+            // Extraer el valor del token
+            const token = tokenCookie.split("=")[1];
 
-    <!-- Flowbite JS para la funcionalidad adicional -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"
-      defer></script>
+            // Mostrar el contenido del dashboard solo si el token es válido
+            dashboardContent.classList.remove("hidden");
+            // Mostrar el token para propósitos de prueba
+            document.getElementById("token-info").textContent =
+              `Tu token es: ${token}`;
+          }
+
+          // Manejo del drawer sidebar
+          const drawerToggleButton = document.getElementById(
+            "drawer-toggle-button"
+          );
+          const drawerNavigation = document.getElementById("drawer-navigation");
+
+          if (drawerToggleButton && drawerNavigation) {
+            drawerToggleButton.addEventListener("click", () => {
+              drawerNavigation.classList.toggle("-translate-x-full");
+            });
+          }
+
+          // Manejo del botón de cerrar sesión
+          const logoutButton = document.getElementById("logout-button");
+          if (logoutButton) {
+            logoutButton.addEventListener("click", () => {
+              // Borrar la cookie del token
+              document.cookie =
+                "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+              // Redirigir al login
+              window.location.href = "/";
+            });
+          }
+        });
+      </script>
+
+      <!-- Flowbite JS para la funcionalidad adicional -->
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"
+        defer></script>
+    </nav>
   </body>
 </html>
