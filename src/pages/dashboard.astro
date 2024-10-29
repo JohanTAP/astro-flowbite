@@ -1,10 +1,16 @@
-<!doctype html>
 <html lang="es" class="dark">
   <head>
     <title>Dashboard</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Incluye Tailwind CSS y Flowbite JS aquí -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"
+      defer></script>
   </head>
   <body class="antialiased bg-gray-50 dark:bg-gray-900">
     <!-- Barra de navegación -->
@@ -13,6 +19,7 @@
     >
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
+          <!-- Botón de menú para abrir el sidebar -->
           <button
             id="drawer-toggle-button"
             data-drawer-target="drawer-navigation"
@@ -34,13 +41,68 @@
             </svg>
             <span class="sr-only">Toggle sidebar</span>
           </button>
-          <a href="/" class="flex items-center justify-between mr-4">
-            <img src="/Logotipo.svg" class="mr-3 h-8" alt="Logo" />
+          <div class="flex items-center justify-between mr-4">
+            <img
+              src="/Logotipo.svg"
+              class="mr-3 h-8"
+              alt="Logo"
+              loading="lazy"
+            />
             <span
               class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
               >Tu Imagen RX</span
             >
-          </a>
+          </div>
+        </div>
+        <!-- Menú de usuario actualizado -->
+        <div class="flex items-center lg:order-2">
+          <button
+            type="button"
+            class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            id="user-menu-button"
+            aria-expanded="false"
+            data-dropdown-toggle="dropdown"
+          >
+            <span class="sr-only">Open user menu</span>
+            <div
+              class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
+            >
+              <svg
+                class="absolute w-12 h-12 text-gray-400 -left-1"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"></path></svg
+              >
+            </div>
+          </button>
+          <!-- Dropdown menu para el usuario -->
+          <div
+            class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown"
+          >
+            <div class="py-3 px-4">
+              <span
+                class="block text-sm font-semibold text-gray-900 dark:text-white"
+                >Usuario</span
+              >
+            <ul
+              class="py-1 text-gray-700 dark:text-gray-300"
+              aria-labelledby="dropdown"
+            >
+              <li>
+                <a
+                  id="logout-button"
+                  href="#"
+                  class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
+                  >Cerrar sesión</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -49,9 +111,37 @@
     <aside
       id="drawer-navigation"
       class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+      tabindex="-1"
+      aria-labelledby="drawer-navigation-label"
+      aria-hidden="true"
     >
       <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
-        <!-- Contenido del sidebar -->
+        <h5
+          id="drawer-navigation-label"
+          class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
+        >
+          Navegación
+        </h5>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="#"
+              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M10 20a10 10 0 100-20 10 10 0 000 20z"></path>
+              </svg>
+              <span class="ml-3">Dashboard</span>
+            </a>
+          </li>
+          <!-- Puedes añadir más elementos del sidebar aquí -->
+        </ul>
       </div>
     </aside>
 
@@ -63,12 +153,12 @@
       </div>
     </main>
 
-    <!-- Script de JavaScript para manejar el token y abrir el sidebar -->
+    <!-- Script de JavaScript para manejar el token, abrir el sidebar y cerrar sesión -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         // Verificar si el usuario está autenticado (token presente en cookies)
         const cookies = document.cookie.split("; ");
-        const tokenCookie = cookies.find(row => row.startsWith("token="));
+        const tokenCookie = cookies.find((row) => row.startsWith("token="));
 
         const dashboardContent = document.getElementById("dashboard-content");
 
@@ -82,23 +172,39 @@
           // Mostrar el contenido del dashboard solo si el token es válido
           dashboardContent.classList.remove("hidden");
           // Mostrar el token para propósitos de prueba
-          document.getElementById("token-info").textContent = `Tu token es: ${token}`;
+          document.getElementById("token-info").textContent =
+            `Tu token es: ${token}`;
         }
 
         // Manejo del drawer sidebar
-        const drawerToggleButton = document.getElementById("drawer-toggle-button");
+        const drawerToggleButton = document.getElementById(
+          "drawer-toggle-button"
+        );
         const drawerNavigation = document.getElementById("drawer-navigation");
 
         if (drawerToggleButton && drawerNavigation) {
           drawerToggleButton.addEventListener("click", () => {
-            if (drawerNavigation.classList.contains("-translate-x-full")) {
-              drawerNavigation.classList.remove("-translate-x-full");
-            } else {
-              drawerNavigation.classList.add("-translate-x-full");
-            }
+            drawerNavigation.classList.toggle("-translate-x-full");
+          });
+        }
+
+        // Manejo del botón de cerrar sesión
+        const logoutButton = document.getElementById("logout-button");
+        if (logoutButton) {
+          logoutButton.addEventListener("click", () => {
+            // Borrar la cookie del token
+            document.cookie =
+              "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            // Redirigir al login
+            window.location.href = "/";
           });
         }
       });
     </script>
+
+    <!-- Flowbite JS para la funcionalidad adicional -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"
+      defer></script>
   </body>
 </html>
