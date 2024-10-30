@@ -1,0 +1,181 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/src/styles/styles.css" />
+  </head>
+  <body class="antialiased bg-gray-50 dark:bg-gray-900">
+    <nav
+      class="bg-white border-b border-gray-200 px-4 py-2 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50 w-full"
+    >
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center">
+          <button
+            id="drawer-toggle-button"
+            data-drawer-target="drawer-navigation"
+            data-drawer-toggle="drawer-navigation"
+            aria-controls="drawer-navigation"
+            class="p-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Toggle sidebar</span>
+          </button>
+          <div class="flex items-center">
+            <img
+              src="/Logotipo.svg"
+              class="h-6 mr-2"
+              alt="Logo"
+              loading="lazy"
+            />
+            <span
+              class="text-lg font-semibold whitespace-nowrap dark:text-white"
+              >Tu Imagen RX</span
+            >
+          </div>
+        </div>
+        <div class="flex items-center lg:order-2">
+          <button
+            type="button"
+            class="text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            id="user-menu-button"
+            aria-expanded="false"
+            data-dropdown-toggle="dropdown"
+          >
+            <span class="sr-only">Open user menu</span>
+            <div
+              class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
+            >
+              <svg
+                class="absolute w-10 h-10 text-gray-400 -left-1"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"></path></svg
+              >
+            </div>
+          </button>
+          <div
+            class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown"
+          >
+            <div class="py-3 px-4">
+              <span
+                class="block text-sm font-semibold text-gray-900 dark:text-white"
+                >Usuario</span
+              >
+              <ul
+                class="py-1 text-gray-700 dark:text-gray-300"
+                aria-labelledby="dropdown"
+              >
+                <li>
+                  <a
+                    id="logout-button"
+                    href="#"
+                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
+                    >Cerrar sesión</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <aside
+      id="drawer-navigation"
+      class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+      tabindex="-1"
+      aria-labelledby="drawer-navigation-label"
+      aria-hidden="true"
+    >
+      <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+        <h5
+          id="drawer-navigation-label"
+          class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
+        >
+          Navegación
+        </h5>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="#"
+              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M10 20a10 10 0 100-20 10 10 0 000 20z"></path>
+              </svg>
+              <span class="ml-3">Dashboard</span>
+            </a>
+          </li>
+          <!-- Más elementos del sidebar aquí -->
+        </ul>
+      </div>
+    </aside>
+
+    <main id="dashboard-content" class="p-4 md:ml-64 h-auto pt-20">
+      <div class="text-gray-900 dark:text-white mb-4">
+        <slot />
+      </div>
+    </main>
+
+    <!-- Script de JavaScript para manejar el token y cerrar sesión -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cookies = document.cookie.split("; ");
+        const tokenCookie = cookies.find((row) => row.startsWith("token="));
+
+        if (!tokenCookie) {
+          window.location.href = "/";
+        } else {
+          const token = tokenCookie.split("=")[1];
+          const tokenInfoElement = document.getElementById("token-info");
+
+          if (tokenInfoElement) {
+            tokenInfoElement.textContent = `Tu token es: ${token}`;
+          }
+        }
+
+        const logoutButton = document.getElementById("logout-button");
+        if (logoutButton) {
+          logoutButton.addEventListener("click", () => {
+            document.cookie =
+              "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = "/";
+          });
+        }
+      });
+    </script>
+    <script src="/node_modules/flowbite/dist/flowbite.js" defer></script>
+  </body>
+</html>
